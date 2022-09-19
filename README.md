@@ -78,3 +78,11 @@ As all policies are configured via the RealmModel, a custom implementation of th
 interface (`FakeRealm`) is used to inject the configuration into the classes.
 
 For details please have a look at the source code.
+
+## Bamboo Details
+
+Here are the steps to build the Artifacts and publish them to Artifactory.
+
+### Build Steps
+
+This is a standard FORMS Artifactory pipeline.
