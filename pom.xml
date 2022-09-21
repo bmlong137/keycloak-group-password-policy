@@ -86,7 +86,8 @@
 				<version>2.8.2</version>
 				<configuration>
 					<repositoryId>almtools-forms</repositoryId>
-					<file>${project.artifactId}-${project.version}.jar</file>
+					<file>target/${project.artifactId}-${project.version}-keycloak-v${keycloak.majorVersion}.jar</file>
+					<classifier>keycloak-v${keycloak.majorVersion}</classifier>
 					<url>https://artifactory.fiscal.treasury.gov/artifactory/forms-libs-local</url>
 					<pomFile>pom.xml</pomFile>
 				</configuration>
