@@ -72,7 +72,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
-                	<classifier>keycloak-v${keycloak.version.range}</classifier>
+                	<classifier>keycloak-${keycloak.version.range}</classifier>
                 	<archive>
                 		<manifestEntries>
                 			<!-- This is required in order for the classloader of this JAR to access the specified library at runtime -->
@@ -86,8 +86,8 @@
 				<version>2.8.2</version>
 				<configuration>
 					<repositoryId>almtools-forms</repositoryId>
-					<file>${project.artifactId}-${project.version}-keycloak-v${keycloak.majorVersion}.jar</file>
-					<classifier>keycloak-v${keycloak.majorVersion}</classifier>
+					<file>${project.artifactId}-${project.version}-keycloak-${keycloak.version.range}.jar</file>
+					<classifier>keycloak-${keycloak.version.range}</classifier>
 					<url>https://artifactory.fiscal.treasury.gov/artifactory/forms-libs-local</url>
 					<pomFile>pom.xml</pomFile>
 				</configuration>
