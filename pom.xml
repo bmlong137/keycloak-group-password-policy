@@ -253,13 +253,13 @@
     		</build>
     	</profile>
     	<profile>
-    		<id>keycloak-v25-v26</id>
+    		<id>keycloak-v25</id>
     		<activation>
     			<activeByDefault>true</activeByDefault>
     		</activation>
     		<properties>
         		<keycloak.majorVersion>25</keycloak.majorVersion>
-        		<keycloak.version.range>v25-v26</keycloak.version.range>
+        		<keycloak.version.range>v25</keycloak.version.range>
     		</properties>
     		<build>
     			<plugins>
@@ -272,13 +272,49 @@
     							<goals><goal>add-source</goal></goals>
 		    					<configuration>
 		    						<sources>
-		    							<source>${basedir}/src/keycloak-v25-v26/java</source>
+		    							<source>${basedir}/src/keycloak-v25/java</source>
 		    							<source>${basedir}/src/keycloak-v7+/java</source>
 		    							<source>${basedir}/src/keycloak-v8+/java</source>
 		    							<source>${basedir}/src/keycloak-v12+/java</source>
 		    							<source>${basedir}/src/keycloak-v13+/java</source>
 		    							<source>${basedir}/src/keycloak-v15+/java</source>
 		    							<source>${basedir}/src/keycloak-v25+/java</source>
+		    						</sources>
+		    					</configuration>
+    						</execution>
+    					</executions>
+    				</plugin>
+    			</plugins>
+    		</build>
+    	</profile>
+    	<profile>
+    		<id>keycloak-v26</id>
+    		<activation>
+    			<activeByDefault>true</activeByDefault>
+    		</activation>
+    		<properties>
+        		<keycloak.majorVersion>26</keycloak.majorVersion>
+        		<keycloak.version.range>v26</keycloak.version.range>
+    		</properties>
+    		<build>
+    			<plugins>
+    				<plugin>
+    					<groupId>org.codehaus.mojo</groupId>
+    					<artifactId>build-helper-maven-plugin</artifactId>
+    					<executions>
+    						<execution>
+    							<id>add-source</id>
+    							<goals><goal>add-source</goal></goals>
+		    					<configuration>
+		    						<sources>
+		    							<source>${basedir}/src/keycloak-v26/java</source>
+		    							<source>${basedir}/src/keycloak-v7+/java</source>
+		    							<source>${basedir}/src/keycloak-v8+/java</source>
+		    							<source>${basedir}/src/keycloak-v12+/java</source>
+		    							<source>${basedir}/src/keycloak-v13+/java</source>
+		    							<source>${basedir}/src/keycloak-v15+/java</source>
+		    							<source>${basedir}/src/keycloak-v25+/java</source>
+		    							<source>${basedir}/src/keycloak-v26+/java</source>
 		    						</sources>
 		    					</configuration>
     						</execution>

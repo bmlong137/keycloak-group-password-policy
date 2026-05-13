@@ -1536,5 +1536,51 @@ public interface UnsupportedRealm extends RealmModel {
 	default void setOrganizationsEnabled(boolean organizationsEnabled) {
         throw new UnsupportedOperationException("Not supported yet.");
 	}
+
+
+
+    /**
+     * Added in Keycloak v26
+     */
+
+    default ClientModel getAdminPermissionsClient() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    default void setAdminPermissionsClient(ClientModel client) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    default int getMaxSecondaryAuthFailures() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    default void setMaxSecondaryAuthFailures(int maxSecondaryAuthFailures) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    default boolean isAdminPermissionsEnabled() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    default void setAdminPermissionsEnabled(boolean adminPermissionsEnabled) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    default boolean isScimApiEnabled() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    default void setScimApiEnabled(boolean enabled) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    default boolean isVerifiableCredentialsEnabled() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    default void setVerifiableCredentialsEnabled(boolean verifiableCredentialsEnabled) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
     
 }
