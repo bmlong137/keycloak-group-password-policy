@@ -254,9 +254,6 @@
     	</profile>
     	<profile>
     		<id>keycloak-v25</id>
-    		<activation>
-    			<activeByDefault>true</activeByDefault>
-    		</activation>
     		<properties>
         		<keycloak.majorVersion>25</keycloak.majorVersion>
         		<keycloak.version.range>v25</keycloak.version.range>
