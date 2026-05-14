@@ -6,15 +6,22 @@
     <version>0.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <properties>
-        <!-- general settings -->
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>1.8</java.version>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
-        <keycloak.version>${keycloak.majorVersion}.0.0</keycloak.version>
-        <auto-service.version>1.1.1</auto-service.version>
-    </properties>
+	<properties>
+		<!-- general settings -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.8</java.version>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+		<auto-service.version>1.1.1</auto-service.version>
+		
+		<!-- likely overridden by profiles -->
+		<keycloak.majorVersion>26</keycloak.majorVersion>
+		<keycloak.version>${keycloak.majorVersion}.0.0</keycloak.version>
+
+		<!-- for integration testing only -->
+		<keycloak.port>8089</keycloak.port>
+		<keycloak.timeout>60000</keycloak.timeout>
+	</properties>
 
     <dependencies>
         <dependency>
@@ -53,6 +60,11 @@
   					<artifactId>build-helper-maven-plugin</artifactId>
   					<version>3.6.0</version>
                 </plugin>
+				<plugin>
+					<groupId>io.fabric8</groupId>
+					<artifactId>docker-maven-plugin</artifactId>
+					<version>0.48.1</version>
+				</plugin>
             </plugins>
         </pluginManagement>
         
@@ -70,10 +82,78 @@
                 	</archive>
                 </configuration>
             </plugin>
+			<plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<configuration>
+					<skipRun>${skipITs}</skipRun>
+				</configuration>
+				<executions>
+					<execution>
+						<id>start-keycloak</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>start</goal>
+						</goals>
+						<configuration>
+							<images>
+								<image>
+									<alias>kc</alias>
+									<name>keycloak/keycloak:${keycloak.version}</name>
+									<run>
+										<volumes>
+											<bind>
+												<volume>${project.build.directory}:/opt/keycloak/providers/:ro</volume>
+											</bind>
+										</volumes>
+										<log>
+											<enabled>true</enabled>
+										</log>
+										<wait>
+											<http>
+												<url>http://127.0.0.1:${keycloak.port}/realms/master</url>
+											</http>
+											<time>${keycloak.timeout}</time>
+										</wait>
+										<!-- https://www.keycloak.org/getting-started/getting-started-docker -->
+										<env>
+											<KC_BOOTSTRAP_ADMIN_USERNAME>admin</KC_BOOTSTRAP_ADMIN_USERNAME>
+											<KC_BOOTSTRAP_ADMIN_PASSWORD>admin</KC_BOOTSTRAP_ADMIN_PASSWORD>
+										</env>
+										<ports>
+											<port>127.0.0.1:${keycloak.port}:8080</port>
+										</ports>
+										<cmd>start-dev --log-level-com.github.jpicht.keycloak=trace</cmd>
+									</run>
+								</image>
+							</images>
+						</configuration>
+					</execution>
+					<execution>
+						<id>stop-keycloak</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
         </plugins>
     </build>
     
     <profiles>
+		<!-- windows/wsl is especially slow in regards to linux containers -->
+		<profile>
+			<id>windows</id>
+			<activation>
+				<os>
+					<family>windows</family>
+				</os>
+			</activation>
+			<properties>
+				<keycloak.timeout>120000</keycloak.timeout>
+			</properties>
+		</profile>
     	<profile>
     		<id>keycloak-v6</id>
     		<properties>
